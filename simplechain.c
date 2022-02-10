@@ -18,6 +18,8 @@ int main (int argc, char *argv[]) {
       if (childpid = fork())
          break;
 
+   sleep(10);
+
    fprintf(stderr, "i:%d process ID:%ld parent ID:%ld child ID:%ld\n",
       i, (long)getpid(), (long)getppid(), (long)childpid);
 
