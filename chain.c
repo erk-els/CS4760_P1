@@ -13,19 +13,18 @@ int main (int argc, char *argv[]) {
     int i, j, opt;
 
     //perror() message init
-    char error_stmt[64];
+   /* char error_stmt[64];
     strcpy(error_stmt, argv[0]);
-    strcat(error_stmt, ": Error");
-    
-    //default command line arguments init
+    strcat("chain: Error:", error_stmt);
+	*/
+
+    //  default command line arguments init
     int nprocs = 4;
     //int nchars = 80;
     int sleeptime = 3;
     int niters = 1;
     //char *fname = "input.dat";
     //FILE *fname = NULL;
-
-    printf("\n");
 
     //input command line args, getop() loop
     while ((opt = getopt(argc, argv, "hp:s:i:")) != -1) {
@@ -42,48 +41,26 @@ int main (int argc, char *argv[]) {
 			    return 0;
 		    //number of processes = 'n'
 		    case 'p':
-			    if (optarg == NULL) {
-				    break;
-			    } else if (isdigit(*optarg)) {
-				    nprocs = atoi(optarg);
-				    break;
-			    } else {
-				    perror("optarg");
-				    return 1;
-			    }
+			    nprocs = atoi(optarg);
 			    break;
 		    /*case 'c':
-			    if(isdigit(*optarg)) {
-				    nchars = atoi(optarg);
-			    } else {
-				    perror("invalid -c value");
-			    }
+			    nchars = atoi(optarg);
 			    break;
-			    */
+	    */
 		    //function sleep(m); => sleep(sleeptime);
 		    case 's':
-			    if(isdigit(*optarg)) {
-				    sleeptime = atoi(optarg);
-			    } else {
-				    perror("invalid -s value");
-				    return 1;
-			    }
+			    sleeptime = atoi(optarg);
 			    break;
-		    //loop iterations 'i' instead of 'k'
+		    //loop iterations 'niters' instead of 'k'
 		    case 'i':
-			    if(isdigit(*optarg)) {
-				    niters = atoi(optarg);
-			    } else {
-				    perror("invalid -i value");
-				    return 1;
-			    }
+			    niters = atoi(optarg);
 			    break;
 		    /*case '<':
 			    fname = optarg;
 			    break;
 			    */
 		    default:
-			    return 1;
+			    break;
 	    }
     }
     /*
@@ -93,15 +70,18 @@ int main (int argc, char *argv[]) {
     }
     */
 
-    // 'nprocs' number of processes fork: for-loop
-    for (i = 1; i < nprocs; i++)
-	    if (childpid = fork())
-		    break;
     // 'niters' number of fprintf iterations
+    //for (j = 0; j < niters; j++) {
+	// 'nprocs' number of processes fork: for-loop
+    for (i = 1; i < nprocs; i++) {
+        if (childpid = fork()) {
+            break;
+        }
+    }
     for (j = 0; j < niters; j++) {
-	    sleep(sleeptime);
-	    fprintf(stderr, "i:%d process ID:%ld parent ID:%ld child ID:%ld\n",
-		    i, (long)getpid(), (long)getppid(), (long)childpid);
+        sleep(sleeptime);
+        fprintf(stderr, "i:%d process ID:%ld parent ID:%ld child ID:%ld\n",
+    		i, (long)getpid(), (long)getppid(), (long)childpid);
     }
     return 0;
 }
