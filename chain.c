@@ -63,16 +63,12 @@ int main (int argc, char *argv[]) {
 			    break;
 	    }
     }
-    /*
-    if (argc != 2) {
+
+    /*if (argc != 2) {
 	    fprintf(stderr, "Usage: %s processes\n",argv[0]);
 	    return 1;
-    }
-    */
-
-    // 'niters' number of fprintf iterations
-    //for (j = 0; j < niters; j++) {
-	// 'nprocs' number of processes fork: for-loop
+    }*/
+	
     for (i = 1; i < nprocs; i++) {
         if (childpid = fork()) {
             break;
@@ -80,6 +76,8 @@ int main (int argc, char *argv[]) {
     }
     for (j = 0; j < niters; j++) {
         sleep(sleeptime);
+        wait(NULL);
+
         fprintf(stderr, "i:%d process ID:%ld parent ID:%ld child ID:%ld\n",
     		i, (long)getpid(), (long)getppid(), (long)childpid);
     }
